@@ -1,4 +1,3 @@
-import "./index.css";
 import React, { useState } from "react";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -341,6 +340,8 @@ export const App = () => {
         margin: 0,
         padding: 0,
         minHeight: "100vh",
+        width: "100vw",
+        boxSizing: "border-box",
       }}
     >
       {/* ── HERO ── */}
@@ -438,12 +439,12 @@ export const App = () => {
             gap: 0,
           }}
         >
-          {[
+          {([
             { val: "60+", label: "Years serving Canadian industry" },
             { val: "5", label: "Top-tier technology partners" },
             { val: "100%", label: "In-stock parts, fast ship" },
             { val: "Free", label: "Application engineering support" },
-          ].map((s, i) => (
+          ]).map((s, i) => (
             <div
               key={i}
               style={{
@@ -769,10 +770,10 @@ export const App = () => {
           <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 800 }}>Videos</h2>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20 }}>
-            {[
+            {([
               { title: "IMM Tending with ABB GoFa Cobot", duration: "3:24" },
               { title: "End-of-Line Palletising — Full Line Walkthrough", duration: "5:10" },
-            ].map((v) => (
+            ]).map((v) => (
               <div
                 key={v.title}
                 style={{
@@ -840,11 +841,11 @@ export const App = () => {
         <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 800 }}>Resources</h2>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
-          {[
+          {([
             { label: "White Papers", icon: "📄", items: resources.whitepapers },
             { label: "Case Studies", icon: "🏭", items: resources.caseStudies },
             { label: "Guides", icon: "📘", items: resources.guides },
-          ].map((section) => (
+          ]).map((section) => (
             <div
               key={section.label}
               style={{
