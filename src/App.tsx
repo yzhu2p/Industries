@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare, faCheck } from "@fortawesome/free-solid-svg-icons";
 import abbLogo from "./images/abblogo.svg";
 import omronLogo from "./images/omronlogo.svg";
 import pcLogo from "./images/pclogo.svg";
 import rittalLogo from "./images/rittallogo.svg";
 import smcLogo from "./images/smclogo.svg";
+import imgGoFa from "./images/CRB 15000 - GoFa-1_1x1-L.avif";
+import imgTm from "./images/TM5-900_.png";
+import imgMxh from "./images/img1-MXH-Z.webp";
+import catRobotImg from "./images/cat_robot.png";
+import catDriveImg from "./images/cat_drive.png";
+import catSensorImg from "./images/cat_sensor.png";
+import catPanelImg from "./images/cat_panel.png";
+import prodControllerImg from "./images/prod_controller.png";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -93,37 +101,46 @@ const partners = [
 ];
 
 const categories = [
-  { name: "Robotics", icon: faRobot },
-  { name: "Motion Control", icon: faBolt },
-  { name: "Pneumatics", icon: faWind },
-  { name: "Vision Systems", icon: faEye },
-  { name: "Control Panels", icon: faFolder },
-  { name: "Drives & Motors", icon: faRotate },
-  { name: "Sensors", icon: faSatelliteDish },
-  { name: "Safety", icon: faShield },
+  { name: "Robotics", image: catRobotImg },
+  { name: "Motion Control", image: catDriveImg },
+  { name: "Pneumatics", image: catSensorImg },
+  { name: "Vision Systems", image: catSensorImg },
+  { name: "Control Panels", image: catPanelImg },
+  { name: "Drives & Motors", image: catDriveImg },
+  { name: "Sensors", image: catSensorImg },
+  { name: "Safety", image: catPanelImg },
 ];
 
 const featuredProducts = [
   {
     name: "ABB GoFa CRB 15000",
     brand: "ABB",
-    tag: "Collaborative Robot",
     desc: "10 kg payload, IP67 rated. Ideal for machine tending without safety fencing in plastics cells.",
-    badge: "Most Specified",
+    badge: "Featured",
+    price: "42,500.00",
+    stock: 82,
+    inStock: true,
+    image: imgGoFa,
   },
   {
     name: "OMRON TM Series",
     brand: "OMRON",
-    tag: "Vision-Guided Cobot",
     desc: "Built-in camera and lighting for pick-and-place with inline part verification — no separate vision controller.",
-    badge: null,
+    badge: "Featured",
+    price: "38,200.00",
+    stock: 0,
+    inStock: false,
+    image: imgTm,
   },
   {
     name: "SMC MXH Series",
     brand: "SMC",
-    tag: "Pneumatic Slide",
     desc: "Compact guided actuator for high-cycle EOAT applications. Fits tight mould-area envelopes.",
-    badge: null,
+    badge: "Featured",
+    price: "850.00",
+    stock: 23,
+    inStock: true,
+    image: imgMxh,
   },
 ];
 
@@ -133,18 +150,21 @@ const newSeries = [
     brand: "ABB",
     label: "New Controller Platform",
     desc: "Unified controller for all ABB robots. Faster commissioning, built-in SafeMove.",
+    image: prodControllerImg,
   },
   {
     name: "Phoenix Contact PLCnext",
     brand: "Phoenix Contact",
     label: "Open IPC Platform",
     desc: "Linux-based controller with IEC 61131-3 and Python/C++ support — built for IIoT edge compute.",
+    image: prodControllerImg,
   },
   {
     name: "OMRON FH-3000",
     brand: "OMRON",
     label: "Vision Controller",
     desc: "4-camera synchronous processing at 480 fps. Handles the highest-speed inspection lines.",
+    image: prodControllerImg,
   },
 ];
 
@@ -211,13 +231,12 @@ const ApplicationCard: React.FC<{
         borderBottom: "1px solid #EFF3F9",
       }}
     >
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 12 }}>
-        <span style={{ fontSize: 28, lineHeight: 1, color: "#376FE5", flexShrink: 0 }}><FontAwesomeIcon icon={app.icon} /></span>
+      <div style={{ marginBottom: 12 }}>
         <p
           style={{
             margin: 0,
             fontWeight: 700,
-            fontSize: 18,
+            fontSize: 20,
             color: "#012A4A",
             lineHeight: 1.3,
           }}
@@ -445,56 +464,9 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Talk to an application engineer
+              Contact us
             </button>
           </div>
-        </div>
-      </section>
-
-      {/* ── STATS STRIP ── */}
-      <section
-        style={{
-          background: "#EFF3F9",
-          borderBottom: "1px solid #e5e8ef",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1160,
-            margin: "0 auto",
-            padding: "0 32px",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: 0,
-          }}
-        >
-          {([
-            { val: "60+", label: "Years serving Canadian industry" },
-            { val: "5", label: "Top-tier technology partners" },
-            { val: "100%", label: "In-stock parts, fast ship" },
-            { val: "Free", label: "Application engineering support" },
-          ]).map((s, i) => (
-            <div
-              key={i}
-              style={{
-                padding: "22px 24px",
-                borderRight: i < 3 ? "1px solid #e5e8ef" : "none",
-                textAlign: "center",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0 0 4px",
-                  fontSize: 26,
-                  fontWeight: 700,
-                  color: "#376FE5",
-                }}
-              >
-                {s.val}
-              </p>
-              <p style={{ margin: 0, fontSize: 13, color: "#6b7280" }}>{s.label}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -506,18 +478,13 @@ export const App = () => {
           padding: "72px 32px 64px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 32 }}>
+        <div style={{ marginBottom: 32 }}>
           <div>
-            <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-              What we automate
-            </p>
+
             <h2 style={{ margin: 0, fontSize: 30, fontWeight: 700, color: "#012A4A" }}>
               Common Applications
             </h2>
           </div>
-          <p style={{ margin: 0, fontSize: 13, color: "#6b7280", maxWidth: 320, textAlign: "right" }}>
-            Browse our primary automation applications to see technical details, recommended partners, and direct product links.
-          </p>
         </div>
 
         <div style={{
@@ -537,9 +504,7 @@ export const App = () => {
       {/* ── FEATURED PRODUCTS ── */}
       <section style={{ background: "#EFF3F9", padding: "72px 0" }}>
         <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 32px" }}>
-          <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-            Top picks for this industry
-          </p>
+
           <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
             Featured Products
           </h2>
@@ -556,77 +521,57 @@ export const App = () => {
                 key={p.name}
                 style={{
                   background: "#fff",
-                  borderRadius: 12,
-                  border: "1px solid #e2e6ed",
+                  borderRadius: 8,
+                  border: "1px solid #e5e7eb",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
                   overflow: "hidden",
                   display: "flex",
                   flexDirection: "column",
+                  cursor: "pointer",
                 }}
               >
-                <div
-                  style={{
-                    height: 160,
-                    background: "linear-gradient(135deg, #EFF3F9 0%, #EFF3F9 100%)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 48,
-                    color: "#376FE5"
-                  }}
-                >
-                  <FontAwesomeIcon icon={faRobot} />
-                </div>
-                <div style={{ padding: "20px 22px", flex: 1, display: "flex", flexDirection: "column" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-                    <img src={brandLogos[p.brand]} alt={p.brand} style={{ height: 16, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                <div style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <img src={brandLogos[p.brand]} alt={p.brand} style={{ height: 16, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                  {p.badge && (
                     <span
                       style={{
                         fontSize: 11,
-                        fontWeight: 700,
+                        fontWeight: 500,
                         color: "#376FE5",
-                        background: "#EFF3F9",
-                        padding: "3px 8px",
-                        borderRadius: 4,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.06em",
+                        background: "#eff3f9",
+                        padding: "4px 10px",
+                        borderRadius: 9999,
                       }}
                     >
-                      {p.tag}
+                      {p.badge}
                     </span>
-                    {p.badge && (
-                      <span
-                        style={{
-                          fontSize: 11,
-                          fontWeight: 700,
-                          color: "#15803d",
-                          background: "#dcfce7",
-                          padding: "3px 8px",
-                          borderRadius: 4,
-                        }}
-                      >
-                        {p.badge}
-                      </span>
-                    )}
+                  )}
+                </div>
+                <div
+                  style={{
+                    height: 140,
+                    background: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "20px",
+                  }}
+                >
+                  <img src={p.image} alt={p.name} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }} />
+                </div>
+                <div style={{ padding: "16px 20px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
+                  <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 500, color: "#376FE5" }}>{p.name}</h3>
+                  <div style={{ marginBottom: 12 }}>
+                    <span style={{ fontSize: 11, color: "#6b7280", marginRight: 4 }}>CAD$</span>
+                    <span style={{ fontSize: 18, fontWeight: 500, color: "#111622" }}>{p.price}</span>
                   </div>
-                  <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 700 }}>{p.name}</h3>
-                  <p style={{ margin: "0 0 20px", fontSize: 13, color: "#6b7280", lineHeight: 1.6, flex: 1 }}>
+                  <p style={{ margin: "0 0 16px", fontSize: 12, color: "#4b5563", lineHeight: 1.5, flex: 1 }}>
                     {p.desc}
                   </p>
-                  <button
-                    style={{
-                      padding: "9px 0",
-                      background: "transparent",
-                      color: "#376FE5",
-                      border: "1px solid #376FE5",
-                      borderRadius: 7,
-                      fontSize: 13,
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      width: "100%",
-                    }}
-                  >
-                    View product <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: 4 }} />
-                  </button>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 500, color: p.inStock ? "#16a34a" : "#9ca3af" }}>
+                    <FontAwesomeIcon icon={faCheck} />
+                    <span>{p.inStock ? `${p.stock} In stock` : "Not in stock"}</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -636,9 +581,7 @@ export const App = () => {
 
       {/* ── TECHNOLOGY PARTNERS ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
-        <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-          Who we work with
-        </p>
+
         <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
           Technology Partners
         </h2>
@@ -654,29 +597,26 @@ export const App = () => {
             <div
               key={p.name}
               style={{
-                background: "#fff",
-                border: "1px solid #e2e6ed",
-                borderRadius: 10,
-                padding: "20px 20px",
+                background: "#f8f9fb",
+                borderRadius: 8,
+                padding: "24px",
                 cursor: "pointer",
-                transition: "border-color 0.15s, box-shadow 0.15s",
+                transition: "background-color 0.15s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "#376FE5";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 12px rgba(26,94,184,0.12)";
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "#e2e6ed";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f8f9fb";
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                 <img src={brandLogos[p.name]} alt={p.name} style={{ width: 40, height: 40, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
                 <p style={{ margin: 0, fontWeight: 700, fontSize: 16, color: "#012A4A" }}>
                   {p.name}
                 </p>
               </div>
-              <p style={{ margin: 0, fontSize: 12, color: "#9ca3af" }}>{p.desc}</p>
+              <p style={{ margin: 0, fontSize: 13, color: "#4b5563", lineHeight: 1.5 }}>{p.desc}</p>
             </div>
           ))}
         </div>
@@ -684,9 +624,7 @@ export const App = () => {
 
       {/* ── POPULAR SERIES ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
-        <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-          Explore by family
-        </p>
+
         <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
           Popular Series
         </h2>
@@ -702,46 +640,26 @@ export const App = () => {
             <div
               key={s.name}
               style={{
-                background: "#fff",
-                border: "1px solid #e2e6ed",
-                borderRadius: 10,
+                background: "#f8f9fb",
+                borderRadius: 8,
                 padding: "24px",
                 cursor: "pointer",
-                transition: "border-color 0.15s, box-shadow 0.15s",
+                transition: "background-color 0.15s",
                 display: "flex",
                 flexDirection: "column",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "#376FE5";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 12px rgba(26,94,184,0.12)";
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = "#e2e6ed";
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f8f9fb";
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                <span
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: "#376FE5",
-                    background: "#EFF3F9",
-                    padding: "3px 8px",
-                    borderRadius: 4,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.06em",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6
-                  }}
-                >
-                  <img src={brandLogos[s.brand]} alt={s.brand} style={{ height: 12, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                  {s.brand}
-                </span>
+                <img src={brandLogos[s.brand]} alt={s.brand} style={{ height: 16, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
               </div>
               <h3 style={{ margin: "0 0 8px", fontSize: 16, fontWeight: 700, color: "#012A4A" }}>{s.name}</h3>
-              <p style={{ margin: 0, fontSize: 13, color: "#6b7280", lineHeight: 1.6, flex: 1 }}>
+              <p style={{ margin: 0, fontSize: 13, color: "#4b5563", lineHeight: 1.6, flex: 1 }}>
                 {s.desc}
               </p>
               <div style={{ marginTop: 16 }}>
@@ -755,9 +673,7 @@ export const App = () => {
       {/* ── PRODUCT CATEGORIES ── */}
       <section style={{ background: "#EFF3F9", padding: "72px 0" }}>
         <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 32px" }}>
-          <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-            Shop by discipline
-          </p>
+
           <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>
             Product Categories
           </h2>
@@ -774,8 +690,9 @@ export const App = () => {
                 key={cat.name}
                 style={{
                   background: "#fff",
-                  border: "1px solid #e2e6ed",
-                  borderRadius: 10,
+                  border: "1px solid #e5e7eb",
+                  borderRadius: 8,
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
                   padding: "18px 16px",
                   cursor: "pointer",
                   display: "flex",
@@ -783,16 +700,16 @@ export const App = () => {
                   alignItems: "center",
                   gap: 8,
                   textAlign: "center",
-                  transition: "background 0.15s",
+                  transition: "box-shadow 0.15s",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.background = "#EFF3F9";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.background = "#fff";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
                 }}
               >
-                <span style={{ fontSize: 24 }}><FontAwesomeIcon icon={cat.icon} /></span>
+                <img src={cat.image} alt={cat.name} style={{ width: 64, height: 64, objectFit: "contain", mixBlendMode: "multiply" }} />
                 <span style={{ fontSize: 13, fontWeight: 500, color: "#374151" }}>
                   {cat.name}
                 </span>
@@ -804,9 +721,7 @@ export const App = () => {
 
       {/* ── NEW & TRENDING ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
-        <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-          Just launched
-        </p>
+
         <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>
           New &amp; Trending
         </h2>
@@ -822,23 +737,31 @@ export const App = () => {
             <div
               key={s.name}
               style={{
-                background: "#fff",
-                border: "1px solid #e2e6ed",
-                borderRadius: 12,
+                background: "#f8f9fb",
+                borderRadius: 8,
                 overflow: "hidden",
+                cursor: "pointer",
+                transition: "background-color 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f8f9fb";
               }}
             >
               <div
                 style={{
-                  height: 120,
-                  background: "linear-gradient(135deg, #EFF3F9 0%, #EFF3F9 100%)",
+                  height: 140,
+                  background: "#fff",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: 36,
+                  padding: "16px",
+                  borderBottom: "1px solid #f0f2f5"
                 }}
               >
-                <FontAwesomeIcon icon={faWandMagicSparkles} />
+                <img src={s.image} alt={s.name} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain", mixBlendMode: "multiply" }} />
               </div>
               <div style={{ padding: "18px 20px" }}>
                 <span
@@ -846,22 +769,21 @@ export const App = () => {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 6,
-                    background: "#fef9c3",
-                    color: "#854d0e",
+                    background: "#fff",
+                    color: "#376FE5",
+                    border: "1px solid #e5e7eb",
                     fontSize: 11,
-                    fontWeight: 700,
+                    fontWeight: 500,
                     padding: "3px 8px",
-                    borderRadius: 4,
-                    marginBottom: 8,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.06em",
+                    borderRadius: 9999,
+                    marginBottom: 12,
                   }}
                 >
                   <img src={brandLogos[s.brand]} alt={s.brand} style={{ height: 12, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
                   {s.label}
                 </span>
-                <h3 style={{ margin: "0 0 6px", fontSize: 15, fontWeight: 700 }}>{s.name}</h3>
-                <p style={{ margin: 0, fontSize: 13, color: "#6b7280", lineHeight: 1.6 }}>
+                <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700, color: "#012A4A" }}>{s.name}</h3>
+                <p style={{ margin: 0, fontSize: 13, color: "#4b5563", lineHeight: 1.6 }}>
                   {s.desc}
                 </p>
               </div>
@@ -873,9 +795,7 @@ export const App = () => {
       {/* ── VIDEOS ── */}
       <section style={{ background: "#EFF3F9", padding: "72px 0" }}>
         <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 32px" }}>
-          <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-            See it in action
-          </p>
+
           <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>Videos</h2>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20 }}>
@@ -886,11 +806,19 @@ export const App = () => {
               <div
                 key={v.title}
                 style={{
-                  borderRadius: 12,
+                  borderRadius: 8,
                   overflow: "hidden",
-                  border: "1px solid #e2e6ed",
+                  border: "1px solid #e5e7eb",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
                   background: "#fff",
                   cursor: "pointer",
+                  transition: "box-shadow 0.15s",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
                 }}
               >
                 <div
@@ -944,9 +872,7 @@ export const App = () => {
 
       {/* ── RESOURCES ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
-        <p style={{ margin: "0 0 8px", fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#376FE5" }}>
-          Go deeper
-        </p>
+
         <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>Resources</h2>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
@@ -958,15 +884,14 @@ export const App = () => {
             <div
               key={section.label}
               style={{
-                background: "#fff",
-                border: "1px solid #e2e6ed",
-                borderRadius: 12,
-                padding: "22px 22px",
+                background: "#f8f9fb",
+                borderRadius: 8,
+                padding: "24px",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-                <span style={{ fontSize: 18 }}><FontAwesomeIcon icon={section.icon} /></span>
-                <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>{section.label}</h3>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                <span style={{ fontSize: 18, color: "#012A4A" }}><FontAwesomeIcon icon={section.icon} /></span>
+                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#012A4A" }}>{section.label}</h3>
               </div>
               <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
                 {section.items.map((item) => (
@@ -1037,7 +962,7 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Contact Proax
+              Request a quote
             </button>
             <button
               style={{
@@ -1051,7 +976,7 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Request a quote
+              Contact us
             </button>
           </div>
         </div>
