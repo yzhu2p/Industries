@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare, faCheck, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import abbLogo from "./images/abblogo.svg";
 import omronLogo from "./images/omronlogo.svg";
 import pcLogo from "./images/pclogo.svg";
@@ -111,7 +111,7 @@ const categories = [
   { name: "Safety", image: catPanelImg },
 ];
 
-const featuredProducts = [
+const featuredProductsBase = [
   {
     name: "ABB GoFa CRB 15000",
     brand: "ABB",
@@ -142,6 +142,13 @@ const featuredProducts = [
     inStock: true,
     image: imgMxh,
   },
+];
+
+const featuredProducts = [
+  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-1" })),
+  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-2" })),
+  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-3" })),
+  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-4" })),
 ];
 
 const newSeries = [
@@ -375,6 +382,100 @@ const ApplicationCard: React.FC<{
   </div>
 );
 
+const Carousel: React.FC<{
+  children: React.ReactNode;
+  gap?: number;
+  itemWidth?: string;
+}> = ({ children, gap = 20, itemWidth = "280px" }) => {
+  const trackRef = React.useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (trackRef.current) {
+      const scrollAmount = trackRef.current.offsetWidth;
+      trackRef.current.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div style={{ position: "relative", margin: `0 -${gap}px`, padding: `0 ${gap}px` }}>
+      <button
+        onClick={() => scroll('left')}
+        style={{
+          position: "absolute",
+          left: gap / 2,
+          top: "50%",
+          transform: "translateY(-50%)",
+          background: "#fff",
+          border: "1px solid #e5e7eb",
+          borderRadius: "50%",
+          width: 40,
+          height: 40,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          zIndex: 10,
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
+        <FontAwesomeIcon icon={faAngleLeft} />
+      </button>
+
+      <div
+        ref={trackRef}
+        style={{
+          display: "flex",
+          overflowX: "auto",
+          scrollSnapType: "x mandatory",
+          gap: gap,
+          scrollbarWidth: "none",
+          paddingBottom: 20,
+        }}
+      >
+        <style>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+        {React.Children.map(children, child => (
+          <div style={{
+            flex: `0 0 ${itemWidth}`,
+            scrollSnapAlign: "start",
+            minWidth: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}>
+            {child}
+          </div>
+        ))}
+      </div>
+
+      <button
+        onClick={() => scroll('right')}
+        style={{
+          position: "absolute",
+          right: gap / 2,
+          top: "50%",
+          transform: "translateY(-50%)",
+          background: "#fff",
+          border: "1px solid #e5e7eb",
+          borderRadius: "50%",
+          width: 40,
+          height: 40,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          zIndex: 10,
+          boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
+        <FontAwesomeIcon icon={faAngleRight} />
+      </button>
+    </div>
+  );
+};
+
 // ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 
 export const App = () => {
@@ -509,16 +610,10 @@ export const App = () => {
             Featured Products
           </h2>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: 20,
-            }}
-          >
+          <Carousel itemWidth="280px" gap={20}>
             {featuredProducts.map((p) => (
               <div
-                key={p.name}
+                key={p.id}
                 style={{
                   background: "#fff",
                   borderRadius: 8,
@@ -528,6 +623,7 @@ export const App = () => {
                   display: "flex",
                   flexDirection: "column",
                   cursor: "pointer",
+                  flex: 1,
                 }}
               >
                 <div style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -575,24 +671,18 @@ export const App = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </Carousel>
         </div>
       </section>
 
-      {/* ── TECHNOLOGY PARTNERS ── */}
+      {/* ── MANUFACTURERS ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
 
         <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
-          Technology Partners
+          Manufacturers
         </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: 14,
-          }}
-        >
+        <Carousel itemWidth="220px" gap={14}>
           {partners.map((p) => (
             <div
               key={p.name}
@@ -602,6 +692,10 @@ export const App = () => {
                 padding: "24px",
                 cursor: "pointer",
                 transition: "background-color 0.15s",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flex: 1,
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
@@ -610,16 +704,10 @@ export const App = () => {
                 (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f8f9fb";
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                <img src={brandLogos[p.name]} alt={p.name} style={{ width: 40, height: 40, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                <p style={{ margin: 0, fontWeight: 700, fontSize: 16, color: "#012A4A" }}>
-                  {p.name}
-                </p>
-              </div>
-              <p style={{ margin: 0, fontSize: 13, color: "#4b5563", lineHeight: 1.5 }}>{p.desc}</p>
+              <img src={brandLogos[p.name]} alt={p.name} style={{ width: "auto", height: 60, maxWidth: "100%", objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             </div>
           ))}
-        </div>
+        </Carousel>
       </section>
 
       {/* ── POPULAR SERIES ── */}
@@ -629,13 +717,7 @@ export const App = () => {
           Popular Series
         </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-            gap: 20,
-          }}
-        >
+        <Carousel itemWidth="250px" gap={20}>
           {popularSeries.map((s) => (
             <div
               key={s.name}
@@ -647,6 +729,7 @@ export const App = () => {
                 transition: "background-color 0.15s",
                 display: "flex",
                 flexDirection: "column",
+                flex: 1,
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
@@ -667,7 +750,7 @@ export const App = () => {
               </div>
             </div>
           ))}
-        </div>
+        </Carousel>
       </section>
 
       {/* ── PRODUCT CATEGORIES ── */}
@@ -678,13 +761,7 @@ export const App = () => {
             Product Categories
           </h2>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-              gap: 12,
-            }}
-          >
+          <Carousel itemWidth="150px" gap={12}>
             {categories.map((cat) => (
               <div
                 key={cat.name}
@@ -701,6 +778,7 @@ export const App = () => {
                   gap: 8,
                   textAlign: "center",
                   transition: "box-shadow 0.15s",
+                  flex: 1,
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)";
@@ -715,7 +793,7 @@ export const App = () => {
                 </span>
               </div>
             ))}
-          </div>
+          </Carousel>
         </div>
       </section>
 
@@ -726,13 +804,7 @@ export const App = () => {
           New &amp; Trending
         </h2>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: 20,
-          }}
-        >
+        <Carousel itemWidth="280px" gap={20}>
           {newSeries.map((s) => (
             <div
               key={s.name}
@@ -742,6 +814,9 @@ export const App = () => {
                 overflow: "hidden",
                 cursor: "pointer",
                 transition: "background-color 0.15s",
+                display: "flex",
+                flexDirection: "column",
+                flex: 1,
               }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
@@ -789,7 +864,7 @@ export const App = () => {
               </div>
             </div>
           ))}
-        </div>
+        </Carousel>
       </section>
 
       {/* ── VIDEOS ── */}
