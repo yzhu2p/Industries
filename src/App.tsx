@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare, faCheck, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare, faCheck, faAngleLeft, faAngleRight, faUserTie, faClock, faGraduationCap, faHeadset, faScrewdriverWrench, faWarehouse, faAward } from "@fortawesome/free-solid-svg-icons";
 import abbLogo from "./images/abblogo.svg";
 import omronLogo from "./images/omronlogo.svg";
 import pcLogo from "./images/pclogo.svg";
@@ -22,14 +22,12 @@ const applications = [
     id: "imt",
     title: "Injection Molding Machine Tending",
     icon: faGear,
-    summary: "Automate cycle-timed part retrieval from injection molding machines.",
-    detail:
-      "Collaborative or industrial robots load raw material and unload finished parts from IMMs — eliminating operator exposure to hot molds and repetitive strain. Key considerations include cycle time matching, end-of-arm tooling (EOAT) for varying shot sizes, and integration with the machine's safety gate I/O. Proax recommends ABB GoFa cobots for low-volume cells or OMRON TM Series for vision-guided pick-and-place.",
-    keyPoints: [
-      "Cycle-synchronised robot control via digital I/O or OPC-UA",
-      "Custom EOAT for multi-cavity moulds — soft grippers or vacuum",
-      "Safety-rated monitored stop for operator intervention",
-      "Conveyor integration for downstream buffering",
+    whatItDoes: "Collaborative or industrial robots load raw material and unload finished parts from injection molding machines.",
+    outcomes: [
+      "Eliminates operator exposure to hot molds and repetitive strain",
+      "Matches machine cycle times perfectly for consistent output",
+      "Flexible end-of-arm tooling accommodates varying shot sizes",
+      "Seamless integration with machine safety gate I/O"
     ],
     partners: ["ABB", "OMRON", "SMC"],
     category: "Robotics",
@@ -38,14 +36,12 @@ const applications = [
     id: "part-removal",
     title: "Part Removal & Degating",
     icon: faRobot,
-    summary: "High-speed sprue removal, degating, and quality sorting.",
-    detail:
-      "After the mould opens, a side-entry or top-entry robot removes the sprue and deposits runners separately from finished parts. Vision systems confirm part presence and orientation before release to downstream conveyors. SMC pneumatic grippers paired with Phoenix Contact I/O modules provide the speed and reliability this step demands.",
-    keyPoints: [
-      "Sub-2-second removal cycles for high-cavitation tooling",
-      "Integrated sprue/runner separation at the point of removal",
-      "Vision-guided orientation check before conveyor release",
-      "Quick-change EOAT brackets for SKU changeover in minutes",
+    whatItDoes: "High-speed automated side-entry or top-entry robots remove the sprue, degate, and sort finished parts.",
+    outcomes: [
+      "Sub-2-second removal cycles keep up with high-cavitation tooling",
+      "Integrated sprue separation prevents downstream bottlenecks",
+      "Vision checks confirm part presence before conveyor release",
+      "Quick-change brackets allow SKU changeover in minutes"
     ],
     partners: ["SMC", "Phoenix Contact", "OMRON"],
     category: "Robotics",
@@ -54,14 +50,12 @@ const applications = [
     id: "downstream",
     title: "Downstream Packaging",
     icon: faBox,
-    summary: "Automated bagging, boxing, and palletising at end-of-line.",
-    detail:
-      "Parts leaving the moulding cell are counted, oriented, and fed into automated packaging systems. Proax configures complete lines from part counting conveyors through to collaborative palletisers — reducing labour on repetitive tasks and maintaining consistent pack patterns. Rittal enclosures house the control architecture for reliable operation in production environments.",
-    keyPoints: [
-      "Count-verified pack fills using photo-eye arrays",
-      "Cobot palletisers for mixed-SKU end-of-line flexibility",
-      "Integrated label-print-apply for traceability",
-      "Rittal ClimaSys climate control for panel longevity",
+    whatItDoes: "Automated bagging, boxing, and palletising at the end of the production line.",
+    outcomes: [
+      "Reduces labor reliance on repetitive counting and packing tasks",
+      "Maintains consistent pack patterns with verified counts",
+      "Easily handles mixed-SKUs with collaborative palletisers",
+      "Climate-controlled panels ensure reliable operation"
     ],
     partners: ["ABB", "Rittal", "Phoenix Contact"],
     category: "Motion Control",
@@ -70,14 +64,12 @@ const applications = [
     id: "inspection",
     title: "Automated Inspection",
     icon: faMagnifyingGlass,
-    summary: "100% inline vision inspection for defects, flash, and dimensions.",
-    detail:
-      "Machine vision cameras mounted inline or on a robot wrist capture every part before it reaches packaging. OMRON's FH Vision system detects flash, short shots, sink marks, and dimensional deviations — triggering automatic rejection without human intervention. Reject statistics feed dashboards for real-time OEE monitoring.",
-    keyPoints: [
-      "Multi-angle imaging with structured light for 3-D defect detection",
-      "Teach-mode setup — no programming required for new part profiles",
-      "OPC-UA data export to MES / SCADA for SPC trending",
-      "Rejection chute with part archiving for root-cause review",
+    whatItDoes: "100% inline machine vision inspection for defects, flash, short shots, and dimensional deviations.",
+    outcomes: [
+      "Triggers automatic rejection without human intervention",
+      "Real-time OEE monitoring with direct defect statistics",
+      "No programming required to teach new part profiles",
+      "Multi-angle 3D imaging ensures complete quality control"
     ],
     partners: ["OMRON", "Phoenix Contact"],
     category: "Vision Systems",
@@ -216,6 +208,16 @@ const resources = {
   ],
 };
 
+const whyChooseUs = [
+  { title: "In-house Engineering Team", icon: faUserTie, desc: "Application engineers ready to solve complex challenges." },
+  { title: "Short Lead Times", icon: faClock, desc: "Optimized supply chain for faster delivery." },
+  { title: "Highly Trained Staff", icon: faGraduationCap, desc: "Certified experts across all major automation brands." },
+  { title: "Live Chat Support", icon: faHeadset, desc: "Instant answers from real technical specialists." },
+  { title: "Technical Support", icon: faScrewdriverWrench, desc: "Ongoing assistance to keep your line running." },
+  { title: "Local Inventory", icon: faWarehouse, desc: "Stocked warehouses across Canada for rapid dispatch." },
+  { title: "60+ Years of Experience", icon: faAward, desc: "Trusted by industry leaders since 1962." },
+];
+
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
 
 const ApplicationCard: React.FC<{
@@ -223,12 +225,22 @@ const ApplicationCard: React.FC<{
 }> = ({ app }) => (
   <div
     style={{
+      position: "relative",
       background: "#fff",
       border: "1px solid #e2e6ed",
       borderRadius: 12,
       overflow: "hidden",
       display: "flex",
       flexDirection: "column",
+      transition: "box-shadow 0.2s, transform 0.2s",
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.boxShadow = "0 8px 24px rgba(1, 42, 74, 0.08)";
+      e.currentTarget.style.transform = "translateY(-4px)";
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.boxShadow = "none";
+      e.currentTarget.style.transform = "none";
     }}
   >
     {/* Header */}
@@ -236,24 +248,49 @@ const ApplicationCard: React.FC<{
       style={{
         padding: "24px",
         borderBottom: "1px solid #EFF3F9",
+        background: "#fafbfd",
       }}
     >
-      <div style={{ marginBottom: 12 }}>
-        <p
+      <div style={{ marginBottom: 16, display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{
+          width: 48,
+          height: 48,
+          borderRadius: 10,
+          background: "#eef2fb",
+          color: "#376FE5",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 20,
+          flexShrink: 0,
+        }}>
+          <FontAwesomeIcon icon={app.icon} />
+        </div>
+        <a
+          href={`/applications/${app.id}`}
           style={{
             margin: 0,
             fontWeight: 700,
             fontSize: 20,
             color: "#012A4A",
-            lineHeight: 1.3,
+            lineHeight: 1.2,
+            textDecoration: "none",
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.textDecoration = "underline" }}
+          onMouseLeave={(e) => { e.currentTarget.style.textDecoration = "none" }}
         >
           {app.title}
+          <span style={{ position: "absolute", inset: 0, zIndex: 1 }} aria-hidden="true" />
+        </a>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+        <p style={{ margin: 0, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#6b7280" }}>
+          What it does
+        </p>
+        <p style={{ margin: 0, fontSize: 14, color: "#374151", lineHeight: 1.5 }}>
+          {app.whatItDoes}
         </p>
       </div>
-      <p style={{ margin: 0, fontSize: 14, color: "#6b7280", lineHeight: 1.5 }}>
-        {app.summary}
-      </p>
     </div>
 
     {/* Body */}
@@ -265,56 +302,43 @@ const ApplicationCard: React.FC<{
         flex: 1,
       }}
     >
-      <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.6, margin: "0 0 16px" }}>
-        {app.detail}
-      </p>
-
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 24, flex: 1 }}>
         <p
           style={{
             fontSize: 12,
             fontWeight: 700,
-            letterSpacing: "0.08em",
+            letterSpacing: "0.05em",
             textTransform: "uppercase",
-            color: "#9ca3af",
-            margin: "0 0 10px",
+            color: "#6b7280",
+            margin: "0 0 12px",
           }}
         >
-          Key Considerations
+          Why it matters
         </p>
-        <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-          {app.keyPoints.map((pt) => (
+        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+          {app.outcomes.map((outcome, i) => (
             <li
-              key={pt}
+              key={i}
               style={{
                 display: "flex",
                 alignItems: "flex-start",
-                gap: 8,
-                marginBottom: 7,
-                fontSize: 13,
-                color: "#374151",
+                gap: 10,
+                fontSize: 14,
+                color: "#4b5563",
                 lineHeight: 1.5,
               }}
             >
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: "#376FE5",
-                  flexShrink: 0,
-                  marginTop: 6,
-                }}
-              />
-              {pt}
+              <FontAwesomeIcon icon={faCheck} style={{ color: "#10b981", marginTop: 4, fontSize: 12, flexShrink: 0 }} />
+              <span>{outcome}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: "auto", marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20, position: "relative", zIndex: 2 }}>
         {app.partners.map((p) => (
-          <span
+          <a
+            href={`https://proax.ca/en/manufacturers/${p.toLowerCase().replace(/\s+/g, '-')}`}
             key={p}
             style={{
               padding: "4px 10px",
@@ -323,10 +347,14 @@ const ApplicationCard: React.FC<{
               borderRadius: 6,
               fontSize: 12,
               fontWeight: 500,
+              textDecoration: "none",
+              transition: "background 0.2s",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#dbe4f3" }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "#EFF3F9" }}
           >
             {p}
-          </span>
+          </a>
         ))}
         <span
           style={{
@@ -341,7 +369,7 @@ const ApplicationCard: React.FC<{
         </span>
       </div>
 
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", position: "relative", zIndex: 2 }}>
         <button
           style={{
             padding: "9px 18px",
@@ -356,10 +384,13 @@ const ApplicationCard: React.FC<{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            whiteSpace: "nowrap"
+            whiteSpace: "nowrap",
+            transition: "background 0.2s",
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "#2a5dc2" }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "#376FE5" }}
         >
-          View products <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: 6 }} />
+          Browse All Products <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: 6 }} />
         </button>
         <button
           style={{
@@ -372,10 +403,13 @@ const ApplicationCard: React.FC<{
             fontWeight: 500,
             cursor: "pointer",
             flex: 1,
-            whiteSpace: "nowrap"
+            whiteSpace: "nowrap",
+            transition: "background 0.2s",
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = "#f4f7fc" }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = "transparent" }}
         >
-          Talk to sales
+          Talk to a Specialist
         </button>
       </div>
     </div>
@@ -551,7 +585,7 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Browse all products
+              Browse All Products
             </button>
             <button
               style={{
@@ -565,7 +599,7 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Contact us
+              Talk to a Specialist
             </button>
           </div>
         </div>
@@ -684,7 +718,8 @@ export const App = () => {
 
         <Carousel itemWidth="220px" gap={14}>
           {partners.map((p) => (
-            <div
+            <a
+              href={`https://proax.ca/en/manufacturers/${p.name.toLowerCase().replace(/\s+/g, '-')}`}
               key={p.name}
               style={{
                 background: "#f8f9fb",
@@ -698,14 +733,14 @@ export const App = () => {
                 flex: 1,
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
+                (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#f0f2f5";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f8f9fb";
+                (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#f8f9fb";
               }}
             >
               <img src={brandLogos[p.name]} alt={p.name} style={{ width: "auto", height: 60, maxWidth: "100%", objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-            </div>
+            </a>
           ))}
         </Carousel>
       </section>
@@ -945,6 +980,70 @@ export const App = () => {
         </div>
       </section>
 
+      {/* ── WHY CHOOSE PROAX ── */}
+      <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
+        <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <h2 style={{ margin: "0 0 16px", fontSize: 32, fontWeight: 700, color: "#012A4A" }}>
+            Why Choose Proax
+          </h2>
+          <p style={{ margin: "0 auto", fontSize: 16, color: "#4b5563", maxWidth: 600, lineHeight: 1.6 }}>
+            Our engineering expertise and localized support ensure your automation projects succeed from concept to commissioning.
+          </p>
+        </div>
+
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 250px), 1fr))", 
+          gap: 24 
+        }}>
+          {whyChooseUs.map((item) => (
+            <div
+              key={item.title}
+              style={{
+                background: "#fff",
+                border: "1px solid #e2e6ed",
+                borderRadius: 12,
+                padding: "24px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                textAlign: "center",
+                transition: "box-shadow 0.2s, transform 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = "0 8px 24px rgba(1, 42, 74, 0.08)";
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <div style={{
+                width: 56,
+                height: 56,
+                borderRadius: "50%",
+                background: "#eef2fb",
+                color: "#376FE5",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 24,
+                marginBottom: 20,
+              }}>
+                <FontAwesomeIcon icon={item.icon} />
+              </div>
+              <h3 style={{ margin: "0 0 12px", fontSize: 18, fontWeight: 700, color: "#012A4A" }}>
+                {item.title}
+              </h3>
+              <p style={{ margin: 0, fontSize: 14, color: "#4b5563", lineHeight: 1.5 }}>
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── RESOURCES ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
 
@@ -1037,7 +1136,7 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Request a quote
+              Browse All Products
             </button>
             <button
               style={{
@@ -1051,7 +1150,7 @@ export const App = () => {
                 cursor: "pointer",
               }}
             >
-              Contact us
+              Talk to a Specialist
             </button>
           </div>
         </div>
