@@ -1,222 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link, useParams, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faRobot, faBox, faMagnifyingGlass, faBolt, faWind, faEye, faFolder, faRotate, faSatelliteDish, faShield, faWandMagicSparkles, faPlay, faFileLines, faIndustry, faBook, faChevronDown, faArrowRight, faArrowUpRightFromSquare, faCheck, faAngleLeft, faAngleRight, faUserTie, faClock, faGraduationCap, faHeadset, faScrewdriverWrench, faWarehouse, faAward } from "@fortawesome/free-solid-svg-icons";
-import abbLogo from "./images/abblogo.svg";
-import omronLogo from "./images/omronlogo.svg";
-import pcLogo from "./images/pclogo.svg";
-import rittalLogo from "./images/rittallogo.svg";
-import smcLogo from "./images/smclogo.svg";
-import imgGoFa from "./images/CRB 15000 - GoFa-1_1x1-L.avif";
-import imgTm from "./images/TM5-900_.png";
-import imgMxh from "./images/img1-MXH-Z.webp";
-import catRobotImg from "./images/cat_robot.png";
-import catDriveImg from "./images/cat_drive.png";
-import catSensorImg from "./images/cat_sensor.png";
-import catPanelImg from "./images/cat_panel.png";
-import prodControllerImg from "./images/prod_controller.png";
+import { 
+  applications, brandLogos, partners, categories, 
+  featuredProducts, newSeries, popularSeries, resources, whyChooseUs 
+} from "./data/industryData.ts";
+import { ApplicationDetail } from "./pages/ApplicationDetail.tsx";
 
-// ─── DATA ────────────────────────────────────────────────────────────────────
+// ─── UTILS ───────────────────────────────────────────────────────────────────
 
-const applications = [
-  {
-    id: "imt",
-    title: "Injection Molding Machine Tending",
-    icon: faGear,
-    whatItDoes: "Collaborative or industrial robots load raw material and unload finished parts from injection molding machines.",
-    outcomes: [
-      "Eliminates operator exposure to hot molds and repetitive strain",
-      "Matches machine cycle times perfectly for consistent output",
-      "Flexible end-of-arm tooling accommodates varying shot sizes",
-      "Seamless integration with machine safety gate I/O"
-    ],
-    partners: ["ABB", "OMRON", "SMC"],
-    category: "Robotics",
-  },
-  {
-    id: "part-removal",
-    title: "Part Removal & Degating",
-    icon: faRobot,
-    whatItDoes: "High-speed automated side-entry or top-entry robots remove the sprue, degate, and sort finished parts.",
-    outcomes: [
-      "Sub-2-second removal cycles keep up with high-cavitation tooling",
-      "Integrated sprue separation prevents downstream bottlenecks",
-      "Vision checks confirm part presence before conveyor release",
-      "Quick-change brackets allow SKU changeover in minutes"
-    ],
-    partners: ["SMC", "Phoenix Contact", "OMRON"],
-    category: "Robotics",
-  },
-  {
-    id: "downstream",
-    title: "Downstream Packaging",
-    icon: faBox,
-    whatItDoes: "Automated bagging, boxing, and palletising at the end of the production line.",
-    outcomes: [
-      "Reduces labor reliance on repetitive counting and packing tasks",
-      "Maintains consistent pack patterns with verified counts",
-      "Easily handles mixed-SKUs with collaborative palletisers",
-      "Climate-controlled panels ensure reliable operation"
-    ],
-    partners: ["ABB", "Rittal", "Phoenix Contact"],
-    category: "Motion Control",
-  },
-  {
-    id: "inspection",
-    title: "Automated Inspection",
-    icon: faMagnifyingGlass,
-    whatItDoes: "100% inline machine vision inspection for defects, flash, short shots, and dimensional deviations.",
-    outcomes: [
-      "Triggers automatic rejection without human intervention",
-      "Real-time OEE monitoring with direct defect statistics",
-      "No programming required to teach new part profiles",
-      "Multi-angle 3D imaging ensures complete quality control"
-    ],
-    partners: ["OMRON", "Phoenix Contact"],
-    category: "Vision Systems",
-  },
-];
-
-const brandLogos: Record<string, string> = {
-  "ABB": abbLogo,
-  "OMRON": omronLogo,
-  "SMC": smcLogo,
-  "Phoenix Contact": pcLogo,
-  "Rittal": rittalLogo
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
 };
-
-const partners = [
-  { name: "ABB", desc: "Industrial & collaborative robotics" },
-  { name: "OMRON", desc: "Vision, motion & safety systems" },
-  { name: "SMC", desc: "Pneumatics & fluid control" },
-  { name: "Phoenix Contact", desc: "I/O, networking & power" },
-  { name: "Rittal", desc: "Enclosures & thermal management" },
-];
-
-const categories = [
-  { name: "Robotics", image: catRobotImg },
-  { name: "Motion Control", image: catDriveImg },
-  { name: "Pneumatics", image: catSensorImg },
-  { name: "Vision Systems", image: catSensorImg },
-  { name: "Control Panels", image: catPanelImg },
-  { name: "Drives & Motors", image: catDriveImg },
-  { name: "Sensors", image: catSensorImg },
-  { name: "Safety", image: catPanelImg },
-];
-
-const featuredProductsBase = [
-  {
-    name: "ABB GoFa CRB 15000",
-    brand: "ABB",
-    desc: "10 kg payload, IP67 rated. Ideal for machine tending without safety fencing in plastics cells.",
-    badge: "Featured",
-    price: "42,500.00",
-    stock: 82,
-    inStock: true,
-    image: imgGoFa,
-  },
-  {
-    name: "OMRON TM Series",
-    brand: "OMRON",
-    desc: "Built-in camera and lighting for pick-and-place with inline part verification — no separate vision controller.",
-    badge: "Featured",
-    price: "38,200.00",
-    stock: 0,
-    inStock: false,
-    image: imgTm,
-  },
-  {
-    name: "SMC MXH Series",
-    brand: "SMC",
-    desc: "Compact guided actuator for high-cycle EOAT applications. Fits tight mould-area envelopes.",
-    badge: "Featured",
-    price: "850.00",
-    stock: 23,
-    inStock: true,
-    image: imgMxh,
-  },
-];
-
-const featuredProducts = [
-  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-1" })),
-  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-2" })),
-  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-3" })),
-  ...featuredProductsBase.map(p => ({ ...p, id: p.name + "-4" })),
-];
-
-const newSeries = [
-  {
-    name: "ABB OmniCore",
-    brand: "ABB",
-    label: "New Controller Platform",
-    desc: "Unified controller for all ABB robots. Faster commissioning, built-in SafeMove.",
-    image: prodControllerImg,
-  },
-  {
-    name: "Phoenix Contact PLCnext",
-    brand: "Phoenix Contact",
-    label: "Open IPC Platform",
-    desc: "Linux-based controller with IEC 61131-3 and Python/C++ support — built for IIoT edge compute.",
-    image: prodControllerImg,
-  },
-  {
-    name: "OMRON FH-3000",
-    brand: "OMRON",
-    label: "Vision Controller",
-    desc: "4-camera synchronous processing at 480 fps. Handles the highest-speed inspection lines.",
-    image: prodControllerImg,
-  },
-];
-
-const popularSeries = [
-  {
-    name: "L9 Miniature Circuit Breakers",
-    brand: "ABB",
-    desc: "Compact circuit breakers designed for reliable protection in tight spaces.",
-  },
-  {
-    name: "CB-TM Circuit Breakers",
-    brand: "Phoenix Contact",
-    desc: "Thermomagnetic device circuit breakers with a compact design and modular expansion options.",
-  },
-  {
-    name: "A-Series Contactors",
-    brand: "ABB",
-    desc: "High-performance motor protection and switching for industrial applications.",
-  },
-  {
-    name: "SYA Pneumatic Valves",
-    brand: "SMC",
-    desc: "5-port solenoid valves offering high flow rates and low power consumption.",
-  }
-];
-
-const resources = {
-  whitepapers: [
-    "Optimising Injection Moulding Cell OEE",
-    "Cobot vs. Industrial Robot: Plastics Cell ROI Guide",
-    "Pneumatic vs. Electric Actuation in EOAT",
-  ],
-  caseStudies: [
-    "Tier-1 Packaging Supplier: 38% Labour Reduction",
-    "Automotive Plastics: Automated Part Removal Install",
-    "Food-Grade Container Line: Vision Inspection Upgrade",
-  ],
-  guides: [
-    "Robot Selection Guide for IMM Tending",
-    "EOAT Design Basics for Injection Moulded Parts",
-    "Safety Standards for Collaborative Robots (ISO TS 15066)",
-  ],
-};
-
-const whyChooseUs = [
-  { title: "In-house Engineering Team", icon: faUserTie, desc: "Application engineers ready to solve complex challenges." },
-  { title: "Short Lead Times", icon: faClock, desc: "Optimized supply chain for faster delivery." },
-  { title: "Highly Trained Staff", icon: faGraduationCap, desc: "Certified experts across all major automation brands." },
-  { title: "Live Chat Support", icon: faHeadset, desc: "Instant answers from real technical specialists." },
-  { title: "Technical Support", icon: faScrewdriverWrench, desc: "Ongoing assistance to keep your line running." },
-  { title: "Local Inventory", icon: faWarehouse, desc: "Stocked warehouses across Canada for rapid dispatch." },
-  { title: "60+ Years of Experience", icon: faAward, desc: "Trusted by industry leaders since 1962." },
-];
 
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
 
@@ -266,8 +66,8 @@ const ApplicationCard: React.FC<{
         }}>
           <FontAwesomeIcon icon={app.icon} />
         </div>
-        <a
-          href={`/applications/${app.id}`}
+        <Link
+          to={`/applications/${app.id}`}
           style={{
             margin: 0,
             fontWeight: 700,
@@ -281,7 +81,7 @@ const ApplicationCard: React.FC<{
         >
           {app.title}
           <span style={{ position: "absolute", inset: 0, zIndex: 1 }} aria-hidden="true" />
-        </a>
+        </Link>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
         <p style={{ margin: 0, fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#6b7280" }}>
@@ -431,7 +231,7 @@ const Carousel: React.FC<{
   };
 
   return (
-    <div style={{ position: "relative", margin: `0 -${gap}px`, padding: `0 ${gap}px` }}>
+    <div style={{ position: "relative", margin: `0 -${gap}px`, padding: `0 ${gap}px`, overflowX: "hidden" }}>
       <button
         onClick={() => scroll('left')}
         style={{
@@ -510,10 +310,9 @@ const Carousel: React.FC<{
   );
 };
 
-// ─── MAIN PAGE ────────────────────────────────────────────────────────────────
+// ─── INDUSTRIES PAGE ──────────────────────────────────────────────────────────
 
-export const App = () => {
-
+const IndustriesPage = () => {
   return (
     <div
       style={{
@@ -523,7 +322,7 @@ export const App = () => {
         margin: 0,
         padding: 0,
         minHeight: "100vh",
-        width: "100vw",
+        width: "100%",
         boxSizing: "border-box",
       }}
     >
@@ -615,7 +414,6 @@ export const App = () => {
       >
         <div style={{ marginBottom: 32 }}>
           <div>
-
             <h2 style={{ margin: 0, fontSize: 30, fontWeight: 700, color: "#012A4A" }}>
               Common Applications
             </h2>
@@ -802,30 +600,26 @@ export const App = () => {
                 key={cat.name}
                 style={{
                   background: "#fff",
-                  border: "1px solid #e5e7eb",
-                  borderRadius: 8,
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                  padding: "18px 16px",
-                  cursor: "pointer",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 8,
+                  borderRadius: 12,
+                  padding: "16px",
                   textAlign: "center",
-                  transition: "box-shadow 0.15s",
+                  cursor: "pointer",
+                  transition: "transform 0.2s, box-shadow 0.2s",
                   flex: 1,
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)";
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.05)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
-                <img src={cat.image} alt={cat.name} style={{ width: 64, height: 64, objectFit: "contain", mixBlendMode: "multiply" }} />
-                <span style={{ fontSize: 13, fontWeight: 500, color: "#374151" }}>
-                  {cat.name}
-                </span>
+                <div style={{ height: 80, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 12 }}>
+                  <img src={cat.image} alt={cat.name} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }} />
+                </div>
+                <p style={{ margin: 0, fontSize: 14, fontWeight: 500 }}>{cat.name}</p>
               </div>
             ))}
           </Carousel>
@@ -834,148 +628,77 @@ export const App = () => {
 
       {/* ── NEW & TRENDING ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
-
-        <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>
+        <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
           New &amp; Trending
         </h2>
 
-        <Carousel itemWidth="280px" gap={20}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))",
+          gap: 24
+        }}>
           {newSeries.map((s) => (
             <div
               key={s.name}
               style={{
-                background: "#f8f9fb",
-                borderRadius: 8,
+                background: "#fff",
+                border: "1px solid #e5e7eb",
+                borderRadius: 12,
                 overflow: "hidden",
-                cursor: "pointer",
-                transition: "background-color 0.15s",
                 display: "flex",
                 flexDirection: "column",
-                flex: 1,
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f0f2f5";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = "#f8f9fb";
+                cursor: "pointer",
               }}
             >
-              <div
-                style={{
-                  height: 140,
-                  background: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "16px",
-                  borderBottom: "1px solid #f0f2f5"
-                }}
-              >
-                <img src={s.image} alt={s.name} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain", mixBlendMode: "multiply" }} />
+              <div style={{ height: 200, background: "#f8f9fb", display: "flex", alignItems: "center", justifyContent: "center", padding: 32 }}>
+                <img src={s.image} alt={s.name} style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }} />
               </div>
-              <div style={{ padding: "18px 20px" }}>
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    background: "#fff",
-                    color: "#376FE5",
-                    border: "1px solid #e5e7eb",
-                    fontSize: 11,
-                    fontWeight: 500,
-                    padding: "3px 8px",
-                    borderRadius: 9999,
-                    marginBottom: 12,
-                  }}
-                >
-                  <img src={brandLogos[s.brand]} alt={s.brand} style={{ height: 12, objectFit: "contain" }} onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                  {s.label}
-                </span>
-                <h3 style={{ margin: "0 0 6px", fontSize: 16, fontWeight: 700, color: "#012A4A" }}>{s.name}</h3>
-                <p style={{ margin: 0, fontSize: 13, color: "#4b5563", lineHeight: 1.6 }}>
-                  {s.desc}
-                </p>
+              <div style={{ padding: 24 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#376FE5", textTransform: "uppercase", letterSpacing: "0.05em" }}>{s.label}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "8px 0" }}>
+                  <img src={brandLogos[s.brand]} alt={s.brand} style={{ height: 14 }} />
+                  <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>{s.name}</h3>
+                </div>
+                <p style={{ margin: 0, fontSize: 14, color: "#4b5563", lineHeight: 1.6 }}>{s.desc}</p>
               </div>
             </div>
           ))}
-        </Carousel>
+        </div>
       </section>
 
       {/* ── VIDEOS ── */}
       <section style={{ background: "#EFF3F9", padding: "72px 0" }}>
         <div style={{ maxWidth: 1160, margin: "0 auto", padding: "0 32px" }}>
-
-          <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>Videos</h2>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: 20 }}>
-            {([
-              { title: "IMM Tending with ABB GoFa Cobot", duration: "3:24" },
-              { title: "End-of-Line Palletising — Full Line Walkthrough", duration: "5:10" },
-            ]).map((v) => (
-              <div
-                key={v.title}
-                style={{
-                  borderRadius: 8,
-                  overflow: "hidden",
-                  border: "1px solid #e5e7eb",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                  background: "#fff",
-                  cursor: "pointer",
-                  transition: "box-shadow 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
-                }}
-              >
-                <div
-                  style={{
-                    aspectRatio: "16/9",
-                    background: "linear-gradient(135deg, #22577A 0%, #376FE5 100%)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.9)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 22,
-                      paddingLeft: 4,
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faPlay} style={{ marginLeft: 4 }} />
-                  </div>
-                  <span
-                    style={{
-                      position: "absolute",
-                      bottom: 10,
-                      right: 12,
-                      background: "rgba(0,0,0,0.65)",
-                      color: "#fff",
-                      fontSize: 12,
-                      padding: "2px 7px",
-                      borderRadius: 4,
-                    }}
-                  >
-                    {v.duration}
-                  </span>
-                </div>
-                <div style={{ padding: "14px 16px" }}>
-                  <p style={{ margin: 0, fontWeight: 500, fontSize: 14 }}>{v.title}</p>
+          <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
+            Training &amp; Demos
+          </h2>
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 500px), 1fr))",
+            gap: 24
+          }}>
+            <div style={{ background: "#000", borderRadius: 12, aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden", cursor: "pointer" }}>
+              <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ width: 64, height: 64, borderRadius: "50%", background: "#fff", display: "flex", alignItems: "center", justifyContent: "center", color: "#376FE5", fontSize: 24, paddingLeft: 4 }}>
+                  <FontAwesomeIcon icon={faPlay} />
                 </div>
               </div>
-            ))}
+              <div style={{ position: "absolute", bottom: 20, left: 20, color: "#fff" }}>
+                <p style={{ margin: 0, fontSize: 14, fontWeight: 500, opacity: 0.8 }}>Featured Video</p>
+                <h3 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>Automating the Plastics Industry with ABB GoFa</h3>
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {[1, 2, 3].map(i => (
+                <div key={i} style={{ display: "flex", gap: 16, background: "#fff", padding: 12, borderRadius: 12, cursor: "pointer" }}>
+                  <div style={{ width: 140, aspectRatio: "16/9", background: "#000", borderRadius: 8, flexShrink: 0 }}></div>
+                  <div>
+                    <h4 style={{ margin: "0 0 4px", fontSize: 15, fontWeight: 700 }}>Technical Webinar: OMRON Vision for Plastics</h4>
+                    <p style={{ margin: 0, fontSize: 13, color: "#4b5563" }}>12:45 • Advanced Level</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1047,61 +770,75 @@ export const App = () => {
       {/* ── RESOURCES ── */}
       <section style={{ maxWidth: 1160, margin: "0 auto", padding: "72px 32px" }}>
 
-        <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>Resources</h2>
+        <h2 style={{ margin: "0 0 32px", fontSize: 30, fontWeight: 700 }}>
+          Resources
+        </h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 20 }}>
-          {([
-            { label: "White Papers", icon: faFileLines, items: resources.whitepapers },
-            { label: "Case Studies", icon: faIndustry, items: resources.caseStudies },
-            { label: "Guides", icon: faBook, items: resources.guides },
-          ]).map((section) => (
-            <div
-              key={section.label}
-              style={{
-                background: "#f8f9fb",
-                borderRadius: 8,
-                padding: "24px",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                <span style={{ fontSize: 18, color: "#012A4A" }}><FontAwesomeIcon icon={section.icon} /></span>
-                <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: "#012A4A" }}>{section.label}</h3>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))",
+          gap: 32
+        }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 8, background: "#EFF3F9", color: "#376FE5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <FontAwesomeIcon icon={faFileLines} />
               </div>
-              <ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
-                {section.items.map((item) => (
-                  <li key={item} style={{ marginBottom: 10 }}>
-                    <a
-                      href="#"
-                      style={{
-                        fontSize: 13,
-                        color: "#376FE5",
-                        textDecoration: "none",
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: 6,
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      <span style={{ flexShrink: 0, marginTop: 1 }}><FontAwesomeIcon icon={faArrowUpRightFromSquare} /></span>
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>Whitepapers</h3>
             </div>
-          ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {resources.whitepapers.map(w => (
+                <div key={w} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}>
+                  <FontAwesomeIcon icon={faChevronDown} style={{ transform: "rotate(-90deg)", fontSize: 10, color: "#9ca3af" }} />
+                  <span style={{ fontSize: 14, color: "#4b5563" }}>{w}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 8, background: "#EFF3F9", color: "#376FE5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <FontAwesomeIcon icon={faIndustry} />
+              </div>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>Case Studies</h3>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {resources.caseStudies.map(c => (
+                <div key={c} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}>
+                  <FontAwesomeIcon icon={faChevronDown} style={{ transform: "rotate(-90deg)", fontSize: 10, color: "#9ca3af" }} />
+                  <span style={{ fontSize: 14, color: "#4b5563" }}>{c}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+              <div style={{ width: 40, height: 40, borderRadius: 8, background: "#EFF3F9", color: "#376FE5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <FontAwesomeIcon icon={faBook} />
+              </div>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700 }}>Solution Guides</h3>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {resources.guides.map(g => (
+                <div key={g} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer" }}>
+                  <FontAwesomeIcon icon={faChevronDown} style={{ transform: "rotate(-90deg)", fontSize: 10, color: "#9ca3af" }} />
+                  <span style={{ fontSize: 14, color: "#4b5563" }}>{g}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── FINAL CTA ── */}
       <section
         style={{
           background: "linear-gradient(135deg, #012A4A 0%, #376FE5 100%)",
-          padding: "72px 0",
+          padding: "80px 32px",
           textAlign: "center",
         }}
       >
-        <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 32px" }}>
+        <div style={{ maxWidth: 700, margin: "0 auto" }}>
           <h2
             style={{
               margin: "0 0 16px",
@@ -1156,6 +893,18 @@ export const App = () => {
         </div>
       </section>
     </div>
+  );
+};
+
+export const App = () => {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<IndustriesPage />} />
+        <Route path="/applications/:id" element={<ApplicationDetail />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
