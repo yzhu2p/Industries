@@ -590,7 +590,7 @@ export const App = () => {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(480px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 480px), 1fr))",
           gap: 24
         }}>
           {applications.map((app) => (
@@ -873,7 +873,7 @@ export const App = () => {
 
           <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>Videos</h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: 20 }}>
             {([
               { title: "IMM Tending with ABB GoFa Cobot", duration: "3:24" },
               { title: "End-of-Line Palletising — Full Line Walkthrough", duration: "5:10" },
@@ -950,7 +950,7 @@ export const App = () => {
 
         <h2 style={{ margin: "0 0 28px", fontSize: 30, fontWeight: 700 }}>Resources</h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 20 }}>
           {([
             { label: "White Papers", icon: faFileLines, items: resources.whitepapers },
             { label: "Case Studies", icon: faIndustry, items: resources.caseStudies },
